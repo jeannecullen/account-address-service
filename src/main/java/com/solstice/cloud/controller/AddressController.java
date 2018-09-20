@@ -38,7 +38,7 @@ public class AddressController {
     }
 
     @GetMapping("/account/{account}/address")
-    @HystrixCommand(fallbackMethod = "getAddressForAccountFallback")
+    //@HystrixCommand(fallbackMethod = "getAddressForAccountFallback")
     public List<Address> getAddressForAccount(@PathVariable("account") Long account) {
         return addressService.getAddressForAccount(account);
     }
@@ -58,15 +58,15 @@ public class AddressController {
         return ResponseEntity.ok().body("Address has been deleted.");
     }
 
-    public Address createAddressFallback(Address address) {
-        logger.info("Error creating address " +address);
+    public Address createAddressFallback(Address address, Long accountId) {
+        logger.info("Error creating address " +address +accountId);
         return new Address();
     }
 
-    public Optional<Address> getAddresFallback(Long addressId) {
-        logger.info("Error getting address " +addressId);
-        return Optional.of(new Address());
-    }
+//    public Optional<Address> getAddressForAccountFallback(Long account) {
+//        logger.info("Error getting address " +account);
+//        return Optional.of(new Address());
+//    }
 
     public Address updateAddressFallback(Address address) {
         logger.info("Error updating address " +address);
